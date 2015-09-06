@@ -1,7 +1,5 @@
 # complexity-report
 
-**NOTE: This project is no longer maintained. If you're interested in taking ownership, please contact me.**
-
 Software complexity analysis for JavaScript projects.
 Command-line front-end for [escomplex].
 Less attractive elder brother of [JSComplexity.org][jscomplexity].
@@ -238,18 +236,18 @@ See the [contribution guidelines][contributions].
 
 [MIT][license]
 
-[ci-image]: https://secure.travis-ci.org/philbooth/complexity-report.png?branch=master
-[ci-status]: http://travis-ci.org/#!/philbooth/complexity-report
-[escomplex]: https://github.com/philbooth/escomplex
+[ci-image]: https://secure.travis-ci.org/jared-stilwell/complexity-report.png?branch=master
+[ci-status]: http://travis-ci.org/#!/jared-stilwell/complexity-report
+[escomplex]: https://github.com/jared-stilwell/escomplex
 [jscomplexity]: http://jscomplexity.org/
 [node]: http://nodejs.org/
 [esprima]: http://esprima.org/
-[eg]: https://github.com/philbooth/complexity-report/blob/master/EXAMPLE.md
-[metrics]: https://github.com/philbooth/escomplex/blob/master/README.md#metrics
+[eg]: https://github.com/jared-stilwell/complexity-report/blob/master/EXAMPLE.md
+[metrics]: https://github.com/jared-stilwell/escomplex/blob/master/README.md#metrics
 [nodeinstall]: http://nodejs.org/download
-[egconfig]: https://github.com/philbooth/complexity-report/blob/master/.complexrc.example
-[format]: https://github.com/philbooth/escomplex/blob/master/README.md#result
-[plain]: https://github.com/philbooth/complexity-report/blob/master/src/formats/plain.js
-[contributions]: https://github.com/philbooth/complexity-report/blob/master/CONTRIBUTING.md
-[license]: https://github.com/philbooth/complexity-report/blob/master/COPYING
+[egconfig]: https://github.com/jared-stilwell/complexity-report/blob/master/.complexrc.example
+[format]: https://github.com/jared-stilwell/escomplex/blob/master/README.md#result
+[plain]: https://github.com/jared-stilwell/complexity-report/blob/master/src/formats/plain.js
+[contributions]: https://github.com/jared-stilwell/complexity-report/blob/master/CONTRIBUTING.md
+[license]: https://github.com/jared-stilwell/complexity-report/blob/master/COPYING
 

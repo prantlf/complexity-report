@@ -2,8 +2,8 @@
   "name": "complexity-report",
   "version": "1.4.1",
   "description": "Software complexity analysis for JavaScript projects",
-  "homepage": "https://github.com/philbooth/complexity-report",
-  "bugs": "https://github.com/philbooth/complexity-report/issues",
+  "homepage": "https://github.com/jared-stilwell/complexity-report",
+  "bugs": "https://github.com/jared-stilwell/complexity-report/issues",
   "license": "MIT",
   "author": "Phil Booth <pmbooth@gmail.com>",
   "bin": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/philbooth/complexity-report.git"
+    "url": "https://github.com/jared-stilwell/complexity-report.git"
   },
   "keywords": [
     "complexity",
