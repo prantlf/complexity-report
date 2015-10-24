@@ -25,17 +25,17 @@
     "escomplex"
   ],
   "dependencies": {
-    "async": "^0.9.0",
-    "check-types": "2.1.x",
-    "commander": "2.0.x",
-    "escomplex": "1.2.x",
+    "async": "^1.4.2",
+    "check-types": "^4.2.0",
+    "commander": "^2.9.0",
+    "escomplex": "^1.3.0",
     "escomplex-coffee": "0.3.x",
     "escomplex-js": "1.2.x"
   },
   "devDependencies": {
-    "jshint": "2.1.x",
-    "mocha": "1.13.x",
-    "chai": "1.8.x"
+    "jshint": "^2.8.0",
+    "mocha": "^2.3.3",
+    "chai": "^3.4.0"
   },
   "scripts": {
     "lint": "./node_modules/jshint/bin/jshint src --config config/jshint.json",

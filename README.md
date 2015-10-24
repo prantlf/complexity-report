@@ -1,5 +1,7 @@
 # complexity-report
 
+[![Dependency Status](https://david-dm.org/jared-stilwell/complexity-report.svg)](https://david-dm.org/jared-stilwell/complexity-report) [![devDependency Status](https://david-dm.org/jared-stilwell/complexity-report/dev-status.svg)](https://david-dm.org/jared-stilwell/complexity-report#info=devDependencies)
+
 Software complexity analysis for JavaScript projects.
 Command-line front-end for [escomplex].
 Less attractive elder brother of [JSComplexity.org][jscomplexity].
