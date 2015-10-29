@@ -7,6 +7,7 @@
 var options, formatter, state, queue,
 
 cli = require('commander'),
+config = require('./config'),
 fs = require('fs'),
 path = require('path'),
 js = require('escomplex-js'),
@@ -259,7 +260,7 @@ function getReports () {
             return fail('Warning: Complexity threshold breached!\nFailing modules:\n' + failingModules.join('\n'));
         }
 
-        if (isProjectComplexityThresholdSet() && isProjectTooComplex(result)) {
+        if (config.isProjectComplexityThresholdSet(cli) && isProjectTooComplex(result)) {
             fail('Warning: Project complexity threshold breached!');
         }
     } catch (err) {
@@ -295,8 +296,8 @@ function writeReports (result) {
 function getFailingModules (reports) {
     return reports.reduce(function (failingModules, report) {
         if (
-            (isModuleComplexityThresholdSet() && isModuleTooComplex(report)) ||
-            (isFunctionComplexityThresholdSet() && isFunctionTooComplex(report))
+            (config.isModuleComplexityThresholdSet(cli) && isModuleTooComplex(report)) ||
+            (config.isFunctionComplexityThresholdSet(cli) && isFunctionTooComplex(report))
         ) {
             return failingModules.concat(report.path);
         }
@@ -305,15 +306,6 @@ function getFailingModules (reports) {
     }, []);
 }
 
-function isModuleComplexityThresholdSet () {
-    return check.number(cli.minmi);
-}
-
-function isModuleTooComplex (report) {
-    if (isThresholdBreached(cli.minmi, report.maintainability, true)) {
-        return true;
-    }
-}
 
 function isThresholdBreached (threshold, metric, inverse) {
     if (!inverse) {
@@ -321,10 +313,6 @@ function isThresholdBreached (threshold, metric, inverse) {
     }
 
     return check.number(threshold) && metric < threshold;
-}
-
-function isFunctionComplexityThresholdSet () {
-    return check.number(cli.maxcyc) || check.number(cli.maxcycden) || check.number(cli.maxhd) || check.number(cli.maxhv) || check.number(cli.maxhe);
 }
 
 function isFunctionTooComplex (report) {
@@ -355,8 +343,10 @@ function isFunctionTooComplex (report) {
     return false;
 }
 
-function isProjectComplexityThresholdSet () {
-    return check.number(cli.maxfod) || check.number(cli.maxcost) || check.number(cli.maxsize);
+function isModuleTooComplex (report) {
+    if (isThresholdBreached(cli.minmi, report.maintainability, true)) {
+        return true;
+    }
 }
 
 function isProjectTooComplex (result) {
