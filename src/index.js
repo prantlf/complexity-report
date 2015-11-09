@@ -86,11 +86,11 @@ function parseCommandLine () {
         noCoreSize: cli.nocoresize || false
     };
 
-    if (check.unemptyString(cli.format) === false) {
+    if (check.nonEmptyString(cli.format) === false) {
         cli.format = 'plain';
     }
 
-    if (check.unemptyString(cli.filepattern) === false) {
+    if (check.nonEmptyString(cli.filepattern) === false) {
         if (cli.coffeescript) {
             cli.filepattern = '\\.(js|coffee)$';
         } else {
@@ -99,11 +99,11 @@ function parseCommandLine () {
     }
     cli.filepattern = new RegExp(cli.filepattern);
 
-    if (check.unemptyString(cli.dirpattern)) {
+    if (check.nonEmptyString(cli.dirpattern)) {
         cli.dirpattern = new RegExp(cli.dirpattern);
     }
 
-    if (check.unemptyString(cli.excludepattern)) {
+    if (check.nonEmptyString(cli.excludepattern)) {
         cli.excludepattern = new RegExp(cli.excludepattern);
     }
 
@@ -122,7 +122,7 @@ function readConfig (configPath) {
     var configInfo;
 
     try {
-        if (check.not.unemptyString(configPath)) {
+        if (check.not.nonEmptyString(configPath)) {
             configPath = path.join(process.cwd(), '.complexrc');
         }
 
@@ -282,7 +282,7 @@ function mergeResults(jsRes, coffeeRes) {
 function writeReports (result) {
     var formatted = formatter.format(result);
 
-    if (check.unemptyString(cli.output)) {
+    if (check.nonEmptyString(cli.output)) {
         fs.writeFile(cli.output, formatted, 'utf8', function (err) {
             if (err) {
                 error('writeReport', err);
