@@ -1,6 +1,6 @@
 {
   "name": "complexity-report",
-  "version": "1.4.1",
+  "version": "2.0.0-alpha",
   "description": "Software complexity analysis for JavaScript projects",
   "homepage": "https://github.com/jared-stilwell/complexity-report",
   "bugs": "https://github.com/jared-stilwell/complexity-report/issues",
