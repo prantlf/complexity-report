@@ -170,7 +170,6 @@ automatically.
 -i, --forin                           treat for...in statements as source of cyclomatic complexity
 -t, --trycatch                        treat catch clauses as source of cyclomatic complexity
 -n, --newmi                           use the Microsoft-variant maintainability index (scale of 0 to 100)
--T, --coffeescript                    include coffee-script files
 ```
 
 ### Configuration files
@@ -252,4 +251,3 @@ See the [contribution guidelines][contributions].
 [plain]: https://github.com/jared-stilwell/complexity-report/blob/master/src/formats/plain.js
 [contributions]: https://github.com/jared-stilwell/complexity-report/blob/master/CONTRIBUTING.md
 [license]: https://github.com/jared-stilwell/complexity-report/blob/master/COPYING
-

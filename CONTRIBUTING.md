@@ -16,8 +16,7 @@
   I'm not precious
   about the [issue list][issues].
 
-[readme]: https://github.com/philbooth/complexity-report/blob/master/README.md
-[authors]: https://github.com/philbooth/complexity-report/blob/master/AUTHORS
-[newissue]: https://github.com/philbooth/complexity-report/issues/new
-[issues]: https://github.com/philbooth/complexity-report/issues
-
+[readme]: https://github.com/jared-stilwell/complexity-report/blob/master/README.md
+[authors]: https://github.com/jared-stilwell/complexity-report/blob/master/AUTHORS
+[newissue]: https://github.com/jared-stilwell/complexity-report/issues/new
+[issues]: https://github.com/jared-stilwell/complexity-report/issues

@@ -10,8 +10,6 @@ cli = require('commander'),
 config = require('./config'),
 fs = require('fs'),
 path = require('path'),
-js = require('escomplex-js'),
-coffee = require('escomplex-coffee'),
 escomplex = require('escomplex'),
 check = require('check-types'),
 async = require('async');
@@ -25,9 +23,8 @@ parseCommandLine();
 
 state = {
     sources: {
-        js: [],
-        coffee: []
-    },
+        js: []
+    }
 };
 
 expectFiles(cli.args, cli.help.bind(cli));
@@ -64,7 +61,6 @@ function parseCommandLine () {
         option('-i, --forin', 'treat for...in statements as source of cyclomatic complexity').
         option('-t, --trycatch', 'treat catch clauses as source of cyclomatic complexity').
         option('-n, --newmi', 'use the Microsoft-variant maintainability index (scale of 0 to 100)').
-        option('-T, --coffeescript', 'include coffee-script files').
         option('-Q, --nocoresize', 'don\'t calculate core size or visibility matrix').
         parse(process.argv);
 
@@ -91,11 +87,7 @@ function parseCommandLine () {
     }
 
     if (check.nonEmptyString(cli.filepattern) === false) {
-        if (cli.coffeescript) {
-            cli.filepattern = '\\.(js|coffee)$';
-        } else {
-            cli.filepattern = '\\.js$';
-        }
+        cli.filepattern = '\\.js$';
     }
     cli.filepattern = new RegExp(cli.filepattern);
 
@@ -212,7 +204,7 @@ function error (functionName, err) {
 }
 
 function fail (message) {
-    console.log(message);
+    console.log(message); // eslint-disable-line no-console
     process.exitCode = 2;
 }
 
@@ -237,19 +229,10 @@ function getType(modulePath) {
 }
 
 function getReports () {
-    var jsResult, coffeeResult, result, failingModules;
+    var result, failingModules;
 
     try {
-        if (cli.coffeescript) {
-            // if we have coffeescript,
-            // we will be merning results
-            // and recalculating all the values.
-            // skipping the calculation here saves on computation
-            options.skipCalculation = true;
-            coffeeResult = coffee.analyse(state.sources.coffee, options);
-        }
-        jsResult = js.analyse(state.sources.js, options);
-        result = mergeResults(jsResult, coffeeResult);
+        result = escomplex.analyse(state.sources.js, options);
 
         if (!cli.silent) {
             writeReports(result);
@@ -268,17 +251,6 @@ function getReports () {
     }
 }
 
-// merge the array of reports together and rerun through the code to compute aggregates
-function mergeResults(jsRes, coffeeRes) {
-    if (!coffeeRes) {
-        return jsRes;
-    }
-
-    jsRes.reports = jsRes.reports.concat(coffeeRes.reports);
-
-    return escomplex.processResults(jsRes, cli.nocoresize || false);
-}
-
 function writeReports (result) {
     var formatted = formatter.format(result);
 
@@ -289,7 +261,7 @@ function writeReports (result) {
             }
         });
     } else {
-        console.log(formatted);
+        console.log(formatted); // eslint-disable-line no-console
     }
 }
 
@@ -364,4 +336,3 @@ function isProjectTooComplex (result) {
 
     return false;
 }
-
