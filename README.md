@@ -207,7 +207,8 @@ Currently there are five output formats supported:
 `markdown`,
 `minimal`,
 `json`,
-and `xml`.
+`xml`
+and `checkstyle`.
 These are loaded
 from the `src/formats` subdirectory.
 If the format file is not found
