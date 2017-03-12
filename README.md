@@ -1,5 +1,7 @@
 # complexity-report
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/escomplex/complexity-report.svg)](https://greenkeeper.io/)
+
 [![Dependency Status](https://david-dm.org/jared-stilwell/complexity-report.svg)](https://david-dm.org/jared-stilwell/complexity-report) [![devDependency Status](https://david-dm.org/jared-stilwell/complexity-report/dev-status.svg)](https://david-dm.org/jared-stilwell/complexity-report#info=devDependencies)
 
 Software complexity analysis for JavaScript projects.
