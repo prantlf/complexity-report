@@ -4,6 +4,10 @@
   `npm install`
 * Make sure the code lints.
   `npm run lint`
+* Make sure the tests succeed.
+  `npm run test`
+* Make sure the code coverage is enough.
+  `npm run coverage`
 * New features
   or changes to existing features
   must be documented in the [readme] file.

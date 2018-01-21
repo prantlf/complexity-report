@@ -137,7 +137,7 @@ sudo npm install -g complexity-report
 ## Usage
 
 ```
-cr [options] <path>
+cr [options] <paths>
 ```
 
 The tool will recursively read files
@@ -231,6 +231,40 @@ representation of the report.
 
 See [the plain formatter][plain]
 for an example.
+
+## Programmatic Usage
+
+You can call the functionality of the command-line tool directly in other
+scripts, which take part on building or displaying the project complexity.
+
+```js
+const reporter = require('complexity-report');
+// Initialize the reporting module. Repeat for every project analysis.
+reporter.initialize({
+  // Print the full report. Call `cb`, when finished.
+  write: function (formatted, cb) {
+    console.log(formatted);
+    cb();
+  },
+  // Warn about overrun complexity threshold.
+  fail: function (message) {
+    console.warning(message);
+  },
+  // Report a fatal error during the execution.
+  error: function (functionName, error) {
+    console.error('Fatal error [' + functionName + ']: ' + error.message);
+  }
+});
+// Analyse and report complexity of project files and directories.
+reporter.processPaths(['foo.js', 'bar/'], function() {});
+```
+
+Pass analysis and reporting options to `initialize`. Except for the command
+line options above, you should specify `write`, `fail` and `error` methods
+to consume the report output.
+
+Then call `processStream(fileName, stream, cb)`, `processFiles([files], cb)`
+or `processPaths([paths], cb)` to  report their complexity.
 
 ## Development
 
