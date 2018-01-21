@@ -137,12 +137,12 @@ sudo npm install -g complexity-report
 ## Usage
 
 ```
-cr [options] <paths>
+cr [options] <paths>|stdin
 ```
 
-The tool will recursively read files
-from any directories that it encounters
-automatically.
+The tool will recursively read files from any directories that it
+encounters automatically. If no paths are provided, source code will
+be read from standard input.
 
 ### Command-line options
 

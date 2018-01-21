@@ -45,6 +45,27 @@ suite('Reporter Checks', function () {
         });
     });
 
+    test('succeeds checking an stream', function (done) {
+        var source = path.join(__dirname, 'samples/empty-function.js'),
+            stream = fs.createReadStream(source),
+            formatted, message;
+        reporter.initialize({
+            write: function () {
+                formatted = arguments[0];
+                arguments[1]();
+            },
+            fail: function () {
+                message = arguments[0];
+            }
+        });
+        reporter.processStream('stream.js', stream, function () {
+            stream.close();
+            assert.isString(formatted);
+            assert.isUndefined(message);
+            done();
+        });
+    });
+
     test('succeeds checking an existing file', function (done) {
         var source = path.join(__dirname, 'samples/empty-function.js'),
             formatted, message;

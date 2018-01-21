@@ -110,6 +110,21 @@ function drainQueue (cb) {
     };
 }
 
+function processStream (fileName, stream, cb) {
+    var source = '';
+    stream.on('data', function (chunk) {
+        source += chunk;
+      })
+      .on('end', function () {
+        scheduleSourceFile(fileName, source);
+        getReports(cb);
+      })
+      .on('error', function (error) {
+        cli.error('readStream', error);
+        cb();
+      });
+}
+
 function processFiles (files, cb) {
     files.forEach(function (file) {
         queue.push(file);
@@ -160,20 +175,24 @@ function readDirectory (directoryPath, cb) {
     });
 }
 
-function readFile(filePath, cb) {
+function readFile (filePath, cb) {
     fs.readFile(filePath, 'utf8', function (err, source) {
         if (err) {
             cli.error('readFile', err);
             return cb();
         }
 
-        if (beginsWithShebang(source)) {
-            source = commentFirstLine(source);
-        }
-
-        setSource(filePath, source);
+        scheduleSourceFile(filePath, source);
         cb();
     });
+}
+
+function scheduleSourceFile (filePath, source) {
+    if (beginsWithShebang(source)) {
+        source = commentFirstLine(source);
+    }
+
+    setSource(filePath, source);
 }
 
 function beginsWithShebang (source) {
@@ -316,6 +335,7 @@ function isProjectTooComplex (result) {
 
 module.exports = {
     initialize: initialize,
+    processStream: processStream,
     processFiles: processFiles,
     processPaths: processPaths
 };

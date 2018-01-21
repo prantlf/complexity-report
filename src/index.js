@@ -13,16 +13,20 @@ process.on('exit', function(code) {
 });
 
 parseCommandLine();
-expectFiles(cli.args, cli.help.bind(cli));
 
 cli.error = error;
 cli.fail = fail;
 reporter.initialize(cli);
-reporter.processPaths(cli.args, function() {});
+
+if (cli.args.length) {
+    reporter.processPaths(cli.args, function() {});
+} else {
+    reporter.processStream('stdin.js', process.stdin, function() {});
+}
 
 function parseCommandLine () {
     cli.
-        usage('[options] <path>').
+        usage('[options] <paths>|stdin').
         option('-c, --config <path>', 'specify path to configuration JSON file').
         option('-o, --output <path>', 'specify an output file for the report').
         option('-f, --format <format>', 'specify the output format of the report').
@@ -49,12 +53,6 @@ function parseCommandLine () {
         option('-n, --newmi', 'use the Microsoft-variant maintainability index (scale of 0 to 100)').
         option('-Q, --nocoresize', 'don\'t calculate core size or visibility matrix').
         parse(process.argv);
-}
-
-function expectFiles (paths, noFilesFn) {
-    if (paths.length === 0) {
-        noFilesFn();
-    }
 }
 
 function error (functionName, err) {
