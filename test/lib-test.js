@@ -186,17 +186,20 @@ suite('Reporter Checks', function () {
 
     test('fails checking a complex file', function (done) {
         var source = path.join(__dirname, 'samples/complex-function.js'),
-            message;
+            formatted, message;
         reporter.initialize({
             maxcyc: 3,
-            write: function (formatted, cb) {
-                cb();
+            write: function () {
+                formatted = arguments[0];
+                arguments[1]();
             },
             fail: function () {
                 message = arguments[0];
             }
         });
         reporter.processFiles([source], function () {
+            assert.match(formatted, /complex/);
+            assert.match(formatted, /clean/);
             assert.match(message, /samples\/complex-function.js/);
             done();
         });
@@ -206,18 +209,60 @@ suite('Reporter Checks', function () {
         var sources = [
                 path.join(__dirname, 'samples/empty-function.js'),
                 path.join(__dirname, 'samples/complex-function.js')
-            ], message;
+            ], formatted, message;
         reporter.initialize({
             maxcost: 20,
-            write: function (formatted, cb) {
-                cb();
+            write: function () {
+                formatted = arguments[0];
+                arguments[1]();
             },
             fail: function () {
                 message = arguments[0];
             }
         });
         reporter.processFiles(sources, function () {
+            assert.match(formatted, /empty/);
+            assert.match(formatted, /complex/);
+            assert.match(formatted, /clean/);
             assert.isString(message);
+            done();
+        });
+    });
+
+    test('can report only complex functions', function (done) {
+        var source = path.join(__dirname, 'samples/complex-function.js'),
+            formatted;
+        reporter.initialize({
+            maxcyc: 3,
+            onlyfailures: true,
+            write: function () {
+                formatted = arguments[0];
+                arguments[1]();
+            }
+        });
+        reporter.processFiles([source], function () {
+            assert.match(formatted, /complex/);
+            assert.notMatch(formatted, /clean/);
+            done();
+        });
+    });
+
+    test('can report only complex modules', function (done) {
+        var sources = [
+                path.join(__dirname, 'samples/empty-function.js'),
+                path.join(__dirname, 'samples/complex-function.js')
+            ], formatted;
+        reporter.initialize({
+            maxcost: 20,
+            onlyfailures: true,
+            write: function () {
+                formatted = arguments[0];
+                arguments[1]();
+            }
+        });
+        reporter.processFiles(sources, function () {
+            assert.notMatch(formatted, /empty/);
+            assert.match(formatted, /complex/);
             done();
         });
     });

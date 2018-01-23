@@ -2,8 +2,10 @@ module.exports = function complex (object) {
     if (object) {
         if (object.foo) {
             if (object.foo.bar) {
-                return true;
+                return clean();
             }
         }
     }
 };
+
+function clean() {}

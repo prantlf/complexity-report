@@ -166,6 +166,7 @@ be read from standard input.
 -D, --maxhd <halstead difficulty>     specify the per-function Halstead difficulty threshold
 -V, --maxhv <halstead volume>         specify the per-function Halstead volume threshold
 -E, --maxhe <halstead effort>         specify the per-function Halstead effort threshold
+-r, --onlyfailures                    report only modules and functions, which failed the complexity checks
 -s, --silent                          don't write any output to the console
 -l, --logicalor                       disregard operator || as source of cyclomatic complexity
 -w, --switchcase                      disregard switch statements as source of cyclomatic complexity
