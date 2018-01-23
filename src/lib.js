@@ -216,13 +216,12 @@ function getType(modulePath) {
 }
 
 function getReports (cb) {
-    var result, failingModules;
+    var result, failingModules, failingProject;
 
     function checkFailures () {
-        failingModules = getFailingModules(result.reports);
         if (failingModules.length > 0) {
-            cli.fail('Warning: Complexity threshold breached!\nFailing modules:\n' + failingModules.join('\n'));
-        } else if (config.isProjectComplexityThresholdSet(cli) && isProjectTooComplex(result)) {
+            cli.fail('Warning: Complexity threshold breached!\nFailing modules:\n  ' + failingModules.join('\n  '));
+        } else if (failingProject) {
             cli.fail('Warning: Project complexity threshold breached!');
         }
 
@@ -231,6 +230,10 @@ function getReports (cb) {
 
     try {
         result = escomplex.analyse(state.sources.js, options);
+        result.newmi = cli.newmi;
+        failingModules = getAndMarkFailingModules(result);
+        failingProject = isAndMarkProjectTooComplex(result) &&
+                         config.isProjectComplexityThresholdSet(cli);
 
         if (!cli.silent) {
             writeReports(result, checkFailures);
@@ -260,19 +263,22 @@ function writeReports (result, cb) {
     }
 }
 
-function getFailingModules (reports) {
-    return reports.reduce(function (failingModules, report) {
-        if (
-            (config.isModuleComplexityThresholdSet(cli) && isModuleTooComplex(report)) ||
-            (config.isFunctionComplexityThresholdSet(cli) && isFunctionTooComplex(report))
-        ) {
-            return failingModules.concat(report.path);
+function getAndMarkFailingModules (result) {
+    var reports = result.reports;
+    reports = reports.filter(function (report) {
+        var complexModule = isAndMarkModuleTooComplex(report),
+            complexFunctions = countAndMarkFunctionsTooComplex(report);
+        if (config.isModuleComplexityThresholdSet(cli) && complexModule ||
+            config.isFunctionComplexityThresholdSet(cli) && complexFunctions) {
+            return true;
         }
 
-        return failingModules;
-    }, []);
+        return false;
+    });
+    return reports.map(function (report) {
+        return report.path;
+    });
 }
-
 
 function isThresholdBreached (threshold, metric, inverse) {
     if (!inverse) {
@@ -282,50 +288,39 @@ function isThresholdBreached (threshold, metric, inverse) {
     return check.number(threshold) && metric < threshold;
 }
 
-function isFunctionTooComplex (report) {
-    var i;
-
-    for (i = 0; i < report.functions.length; i += 1) {
-        if (isThresholdBreached(cli.maxcyc, report.functions[i].cyclomatic)) {
+function countAndMarkFunctionsTooComplex (report) {
+    var functions = report.functions;
+    functions = functions.filter(function (func) {
+        if (isThresholdBreached(cli.maxcyc, func.cyclomatic) ||
+            isThresholdBreached(cli.maxcycden, func.cyclomaticDensity) ||
+            isThresholdBreached(cli.maxhd, func.halstead.difficulty) ||
+            isThresholdBreached(cli.maxhv, func.halstead.volume) ||
+            isThresholdBreached(cli.maxhe, func.halstead.effort)
+        ) {
+            func.failing = true;
             return true;
         }
 
-        if (isThresholdBreached(cli.maxcycden, report.functions[i].cyclomaticDensity)) {
-            return true;
-        }
+        return false;
+    });
+    return functions.length;
+}
 
-        if (isThresholdBreached(cli.maxhd, report.functions[i].halstead.difficulty)) {
-            return true;
-        }
-
-        if (isThresholdBreached(cli.maxhv, report.functions[i].halstead.volume)) {
-            return true;
-        }
-
-        if (isThresholdBreached(cli.maxhe, report.functions[i].halstead.effort)) {
-            return true;
-        }
+function isAndMarkModuleTooComplex (report) {
+    if (isThresholdBreached(cli.minmi, report.maintainability, true)) {
+        report.failing = true;
+        return true;
     }
 
     return false;
 }
 
-function isModuleTooComplex (report) {
-    if (isThresholdBreached(cli.minmi, report.maintainability, true)) {
-        return true;
-    }
-}
-
-function isProjectTooComplex (result) {
-    if (isThresholdBreached(cli.maxfod, result.firstOrderDensity)) {
-        return true;
-    }
-
-    if (isThresholdBreached(cli.maxcost, result.changeCost)) {
-        return true;
-    }
-
-    if (isThresholdBreached(cli.maxsize, result.coreSize)) {
+function isAndMarkProjectTooComplex (result) {
+    if (isThresholdBreached(cli.maxfod, result.firstOrderDensity) ||
+        isThresholdBreached(cli.maxcost, result.changeCost) ||
+        isThresholdBreached(cli.maxsize, result.coreSize)
+    ) {
+        result.failing = true;
         return true;
     }
 

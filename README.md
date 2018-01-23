@@ -204,8 +204,9 @@ command-line option.
 
 ### Output formats
 
-Currently there are five output formats supported:
+Currently there are seven output formats supported:
 `plain`,
+`colorful`,
 `markdown`,
 `minimal`,
 `json`,
