@@ -1,4 +1,4 @@
-/*globals require, process, console */
+/*globals require, process */
 
 'use strict';
 
@@ -237,7 +237,6 @@ function writeReports (result, cb) {
             cb();
         });
     } else {
-        console.log(formatted); // eslint-disable-line no-console
         cb();
     }
 }
