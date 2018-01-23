@@ -46,6 +46,7 @@ function parseCommandLine () {
         option('-D, --maxhd <halstead difficulty>', 'specify the per-function Halstead difficulty threshold', parseFloat).
         option('-V, --maxhv <halstead volume>', 'specify the per-function Halstead volume threshold', parseFloat).
         option('-E, --maxhe <halstead effort>', 'specify the per-function Halstead effort threshold', parseFloat).
+        option('-r, --onlyfailures', 'report only modules and functions, which failed the complexity checks ').
         option('-s, --silent', 'don\'t write any output to the console').
         option('-l, --logicalor', 'disregard operator || as source of cyclomatic complexity').
         option('-w, --switchcase', 'disregard switch statements as source of cyclomatic complexity').

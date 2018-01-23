@@ -275,6 +275,9 @@ function getAndMarkFailingModules (result) {
 
         return false;
     });
+    if (cli.onlyfailures) {
+        result.reports = reports;
+    }
     return reports.map(function (report) {
         return report.path;
     });
@@ -303,6 +306,9 @@ function countAndMarkFunctionsTooComplex (report) {
 
         return false;
     });
+    if (cli.onlyfailures) {
+        report.functions = functions;
+    }
     return functions.length;
 }
 
