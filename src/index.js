@@ -16,6 +16,7 @@ parseCommandLine();
 
 cli.error = error;
 cli.fail = fail;
+cli.write = write;
 reporter.initialize(cli);
 
 if (cli.args.length) {
@@ -63,4 +64,9 @@ function error (functionName, err) {
 function fail (message) {
     console.log(message); // eslint-disable-line no-console
     process.exitCode = 2;
+}
+
+function write (formatted, cb) {
+    console.log(formatted); // eslint-disable-line no-console
+    cb();
 }

@@ -235,7 +235,8 @@ for an example.
 ## Programmatic Usage
 
 You can call the functionality of the command-line tool directly in other
-scripts, which take part on building or displaying the project complexity.
+scripts. You can implement the output of reports and failures yourself to
+fit the the needs of the building or displaying tool.
 
 ```js
 const reporter = require('complexity-report');
@@ -246,7 +247,7 @@ reporter.initialize({
     console.log(formatted);
     cb();
   },
-  // Warn about overrun complexity threshold.
+  // Warn about overruning the complexity threshold.
   fail: function (message) {
     console.warning(message);
   },
@@ -261,7 +262,7 @@ reporter.processPaths(['foo.js', 'bar/'], function() {});
 
 Pass analysis and reporting options to `initialize`. Except for the command
 line options above, you should specify `write`, `fail` and `error` methods
-to consume the report output.
+to consume the output of the reporter.
 
 Then call `processStream(fileName, stream, cb)`, `processFiles([files], cb)`
 or `processPaths([paths], cb)` to  report their complexity.
