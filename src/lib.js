@@ -231,10 +231,15 @@ function getReports (cb) {
     try {
         result = escomplex.analyse(state.sources.js, options);
         result.newmi = cli.newmi;
+        if (check.function(cli.afterAnalyse)) {
+          cli.afterAnalyse(result);
+        }
         failingModules = getAndMarkFailingModules(result);
         failingProject = isAndMarkProjectTooComplex(result) &&
                          config.isProjectComplexityThresholdSet(cli);
-
+        if (check.function(cli.beforeWrite)) {
+          cli.beforeWrite(result);
+        }
         if (!cli.silent) {
             writeReports(result, checkFailures);
         } else {

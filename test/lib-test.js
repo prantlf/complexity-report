@@ -8,8 +8,14 @@ var path = require('path');
 suite('Reporter Checks', function () {
     test('succeeds checking a file path', function (done) {
         var source = path.join(__dirname, 'samples'),
-            formatted, message;
+            afterAnalyse, beforeWrite, formatted, message;
         reporter.initialize({
+            afterAnalyse: function (result) {
+                afterAnalyse = result;
+            },
+            beforeWrite: function (result) {
+                beforeWrite = result;
+            },
             write: function () {
                 formatted = arguments[0];
                 arguments[1]();
@@ -19,6 +25,8 @@ suite('Reporter Checks', function () {
             }
         });
         reporter.processPaths([source], function () {
+            assert.isObject(afterAnalyse);
+            assert.isObject(beforeWrite);
             assert.isString(formatted);
             assert.isUndefined(message);
             done();
