@@ -1,6 +1,6 @@
 {
-  "name": "complexity-report",
-  "version": "2.0.0-alpha",
+  "name": "complexity-report-ext",
+  "version": "0.0.0-development",
   "description": "Software complexity analysis for JavaScript projects",
   "homepage": "https://github.com/jared-stilwell/complexity-report",
   "bugs": "https://github.com/jared-stilwell/complexity-report/issues",
@@ -15,6 +15,11 @@
     "url": "https://github.com/jared-stilwell/complexity-report.git"
   },
   "maintainers": [
+    {
+      "name": "Ferdinand Prantl",
+      "email": "prantlf@gmail.com",
+      "url": "https://github.com/prantlf"
+    },
     {
       "name": "Jared Stilwell",
       "email": "jared.k.stilwell@gmail.com",
@@ -32,24 +37,31 @@
     "metrics",
     "escomplex"
   ],
+  "engines": {
+    "node": ">=6"
+  },
   "dependencies": {
     "async": "^2.6.0",
     "check-types": "^7.3.0",
-    "colors": "^1.1.2",
-    "commander": "^2.13.0",
+    "colors": "^1.2.1",
+    "commander": "^2.15.1",
     "escomplex": "2.0.0-alpha",
     "esprima": "^4.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "eslint": "^4.16.0",
-    "mocha": "^5.0.0",
-    "nyc": "~11.4.1"
+    "eslint": "^4.19.1",
+    "mocha": "^5.1.1",
+    "nyc": "^11.7.1",
+    "semantic-release": "^15.1.7",
+    "travis-deploy-once": "^4.4.1"
   },
   "scripts": {
     "lint": "eslint test src",
     "test": "mocha --ui tdd --reporter spec --colors",
-    "coverage": "nyc --reporter=text --reporter=html --lines 80 mocha --ui tdd"
+    "coverage": "nyc --reporter=text --reporter=html --lines 80 mocha --ui tdd",
+    "semantic-release": "semantic-release",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
