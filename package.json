@@ -68,5 +68,8 @@
       "node": true,
       "mocha": true
     }
+  },
+  "release": {
+    "branch": "combined"
   }
 }
