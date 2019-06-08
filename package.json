@@ -2,8 +2,8 @@
   "name": "complexity-report-ext",
   "version": "0.0.0-development",
   "description": "Software complexity analysis for JavaScript projects",
-  "homepage": "https://github.com/jared-stilwell/complexity-report",
-  "bugs": "https://github.com/jared-stilwell/complexity-report/issues",
+  "homepage": "https://github.com/prantlf/complexity-report",
+  "bugs": "https://github.com/prantlf/complexity-report/issues",
   "license": "MIT",
   "author": "Phil Booth <pmbooth@gmail.com>",
   "bin": {
@@ -12,7 +12,7 @@
   "main": "./src/lib.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jared-stilwell/complexity-report.git"
+    "url": "https://github.com/prantlf/complexity-report.git"
   },
   "maintainers": [
     {
@@ -57,9 +57,7 @@
   "scripts": {
     "lint": "eslint test src",
     "test": "mocha --ui tdd --reporter spec --colors",
-    "coverage": "nyc --reporter=text --reporter=html --lines 80 mocha --ui tdd",
-    "semantic-release": "semantic-release",
-    "travis-deploy-once": "travis-deploy-once"
+    "coverage": "nyc --reporter=text --reporter=html --lines 80 mocha --ui tdd"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
