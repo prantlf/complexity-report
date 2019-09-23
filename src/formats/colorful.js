@@ -1,5 +1,3 @@
-/*globals exports */
-
 'use strict';
 
 require('colors');

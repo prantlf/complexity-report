@@ -1,5 +1,3 @@
-/*globals exports, JSON */
-
 'use strict';
 
 exports.format = format;

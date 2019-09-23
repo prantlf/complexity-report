@@ -1,5 +1,3 @@
-/*globals exports */
-
 'use strict';
 
 exports.format = format;

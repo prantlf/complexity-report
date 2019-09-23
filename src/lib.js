@@ -1,5 +1,3 @@
-/*globals require, process */
-
 'use strict';
 
 var options, formatter, state, queue, cli,
@@ -105,9 +103,9 @@ function readConfig (configPath) {
 }
 
 function drainQueue (cb) {
-    queue.drain = function() {
+    queue.drain(function() {
         getReports(cb);
-    };
+    });
 }
 
 function processStream (fileName, stream, cb) {

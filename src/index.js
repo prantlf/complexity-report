@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-/*globals require, process, console */
-
 'use strict';
 
 var cli = require('commander'),
